@@ -15,12 +15,14 @@
     <artifactId>SpringBoot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SpringBoot-Blog</name>
-    <description>SpringBoot</description>
+    <description>Blog Build By SpringBoot~</description>
 
     <!-- 版本控制 -->
     <properties>
         <!-- Java 版本 -->
         <java.version>17</java.version>
+        <!-- mysql-connect版本 -->
+        <mysql.version>8.0.26</mysql.version>
         <!-- druid连接池版本号 -->
         <druid.version>1.2.8</druid.version>
         <!-- mybatis-plus版本号 -->
@@ -34,6 +36,40 @@
         <!-- hutool工具箱版本号 -->
         <hutool.version>5.6.3</hutool.version>
     </properties>
+
+    <!-- 环境变量 -->
+    <profiles>
+        <!-- 本地 -->
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>local</env>
+            </properties>
+        </profile>
+        <!-- 开发 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <!-- 线上 -->
+        <profile>
+            <id>prd</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <env>prd</env>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!-- spring-boot-->
@@ -60,6 +96,12 @@
         </dependency>
 
         <!--数据库-->
+        <!-- mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
         <!-- druid -->
         <dependency>
             <groupId>com.alibaba</groupId>

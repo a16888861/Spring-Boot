@@ -1,16 +1,62 @@
 package com.kali.springboot.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import com.kali.springboot.common.response.Response;
+import com.kali.springboot.common.response.ResponseEnum;
+import com.kali.springboot.common.response.ResponseInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/index")
+@Api(value = "首页信息", tags = "首页信息接口")
+@ApiSupport(order = 1, author = "Elliot")
 public class IndexController {
-    @GetMapping("introduce")
-    public String index(){
-        return "Hello Spring Boot~";
+
+    /**
+     * buildName
+     */
+    @Value("${info.build.name}")
+    private String buildName;
+    /**
+     * buildName
+     */
+    @Value("${info.build.artifactId}")
+    private String artifactId;
+    /**
+     * 版本号
+     */
+    @Value("${info.build.version}")
+    private String version;
+    /**
+     * 获取描述信息
+     */
+    @Value("${info.build.description}")
+    private String description;
+
+    /**
+     * Index信息
+     *
+     * @return Index信息
+     */
+    @GetMapping("/")
+    @ApiOperation(value = "获取首页信息", produces = "application/json")
+    @ApiOperationSupport(author = "Elliot")
+    public ResponseInfo<List<String>> index() {
+        List<String> result = new ArrayList<>();
+        result.add("Welcome To The " + buildName + " ~");
+        result.add("Service Id : " + artifactId);
+        result.add("Version : " + version);
+        result.add("Project Description : " + description);
+        result.add("Author : Elliot");
+        return Response.success(ResponseEnum.SUCCESS.getMessage(), result);
     }
 }

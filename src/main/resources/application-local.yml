@@ -8,9 +8,12 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       password: 123456
-      url: jdbc:mysql://localhost:3306/kali?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+      url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
       username: root
       initial-size: 20
       max-active: 200
       min-idle: 8
       max-wait: 60000
+  messages:
+    encoding: UTF-8
+    basename: i18n.message
