@@ -7,7 +7,7 @@ import com.kali.springboot.common.response.ResponseEnum;
 import com.kali.springboot.common.response.ResponseInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
+@Log4j2
 @RestController
 @Api(value = "首页信息", tags = "首页信息接口")
 @ApiSupport(order = 1, author = "Elliot")
@@ -57,6 +57,7 @@ public class IndexController {
         result.add("Version : " + version);
         result.add("Project Description : " + description);
         result.add("Author : Elliot");
+        log.info("result:{}",result);
         return Response.success(ResponseEnum.SUCCESS.getMessage(), result);
     }
 }
