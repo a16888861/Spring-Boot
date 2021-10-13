@@ -46,7 +46,7 @@ public class LogAspect {
     /**
      * 设置切入点
      */
-    @Pointcut("@annotation(com.lucky.kali.common.aspect.Log)")
+    @Pointcut("@annotation(com.kali.springboot.common.aspect.Log)")
     public void pointcut() {
     }
 
