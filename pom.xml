@@ -35,8 +35,6 @@
         <swagger.version>3.0.3</swagger.version>
         <!-- hutool工具箱版本号 -->
         <hutool.version>5.6.3</hutool.version>
-        <!-- log4j2版本号 -->
-        <log4j2.version>2.5.5</log4j2.version>
         <!-- hibernate validator校验依赖 -->
         <validator.version>7.0.1.Final</validator.version>
         <!-- commons-lang3版本号 -->
@@ -115,15 +113,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>${log4j2.version}</version>
-            <classifier>sources</classifier>
-            <type>java-source</type>
         </dependency>
 
         <!-- spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- spring-boot-starter-aop -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!-- spring-boot-starter-test -->
         <dependency>
