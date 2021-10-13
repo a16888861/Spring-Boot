@@ -41,9 +41,6 @@ public class BaseServiceImpl<M extends BaseMapper<E>, E extends BaseEntity, D ex
     @Autowired
     protected M mapper;
 
-//    @Resource
-//    private SqlSessionTemplate sqlSessionTemplate;
-
     protected Class<T> mapperClass = currentMapperClass();
 
     protected Class<T> entityClass = currentModelClass();
@@ -212,62 +209,6 @@ public class BaseServiceImpl<M extends BaseMapper<E>, E extends BaseEntity, D ex
             throw new BaseException("entity 实例化出错");
         }
     }
-
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public boolean saveBatch(Collection<D> dtoList) {
-//        if(CollectionUtils.isEmpty(dtoList)){
-//            return true;
-//        }
-//        ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
-//        Class<E> clazz = (Class<E>) pt.getActualTypeArguments()[0];
-//
-//        try {
-//            //通过整合包提供的Builder，构造MyBatisBatchItemWriter
-//            MyBatisBatchItemWriter<E> itemWriter = new MyBatisBatchItemWriterBuilder<E>()
-//                    .sqlSessionTemplate(new SqlSessionTemplate(sqlSessionTemplate.getSqlSessionFactory(), ExecutorType.BATCH))
-//                    .statementId(clazz.getName() + ".insert")
-//                    .build();
-//
-//            //对构造出对itemWriter，进行了校验
-//            itemWriter.afterPropertiesSet();
-//
-//            itemWriter.write(dtoList.stream().map(dto -> {
-//                E entity = transFromD(dto);
-//                entity.setId(UUIDUtils.getInstance().generateShortUuid());
-//                BeanUtil.copyProperties(entity, dto);
-//                return entity;
-//            }).collect(Collectors.toList()));
-//            return true;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return false;
-//        // 实现方式2 ：该实现 在错误的情况下不能回滚
-////        SqlSession sqlSession = null;
-////        try{
-////            sqlSession = SqlSessionUtils.getSqlSession(
-////                    sqlSessionTemplate.getSqlSessionFactory(),
-////                    ExecutorType.BATCH,sqlSessionTemplate.getPersistenceExceptionTranslator());
-////            dtoList.stream().forEach(dto ->{
-////                E entity = transFromD(dto);
-////                entity.setId(UUIDUtils.getInstance().generateShortUuid());
-////                dto.setId(entity.getId());
-////                mapper.insert(transFromD(dto));
-////            });
-////
-////            sqlSession.commit();
-////            sqlSession.close();
-////        }catch (Exception e){
-////            e.printStackTrace();
-////            sqlSession.rollback();
-////            throw new BaseException("批量插入出错");
-////        }finally {
-////            if(sqlSession!=null){
-////                sqlSession.close();
-////            }
-////        }
-//    }
 
     /**
      * 集合根据属性去重

@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 
 /**
  * service接口
- * @author elliot
  */
 public interface BaseService<E extends BaseEntity, D extends BaseDTO> {
 
@@ -165,13 +164,6 @@ public interface BaseService<E extends BaseEntity, D extends BaseDTO> {
      * @param queryWrapper 实体对象封装操作类
      */
     <P extends IPage<Map<String, Object>>> P selectMapsPage(P page, @Param(Constants.WRAPPER) Wrapper<E> queryWrapper);
-
-//    /**
-//     * 批量新增，使用mybatis自带的批量操作，预编译
-//     * @param dtoList   dto集合
-//     * @return boolean
-//     */
-//    boolean saveBatch(Collection<D> dtoList);
 
     /**
      * 集合根据属性去重
