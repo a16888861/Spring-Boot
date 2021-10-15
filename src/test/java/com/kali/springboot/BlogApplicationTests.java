@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Log4j2
 @SpringBootTest
-class SBApplicationTests {
+class BlogApplicationTests {
 
     @Test
     void contextLoads() {

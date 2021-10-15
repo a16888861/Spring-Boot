@@ -261,7 +261,7 @@
         <repository>
             <id>spring-public-alibaba</id>
             <name>Spring Snapshots</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -279,7 +279,7 @@
         <pluginRepository>
             <id>spring-public-alibaba</id>
             <name>Spring Snapshots</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
