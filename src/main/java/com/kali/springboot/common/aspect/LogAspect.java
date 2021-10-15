@@ -1,7 +1,9 @@
 package com.kali.springboot.common.aspect;
 
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kali.springboot.common.constant.CommonConstants;
+import com.kali.springboot.common.constant.TokenConstant;
 import com.kali.springboot.common.context.UserContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -108,7 +110,7 @@ public class LogAspect {
         if (args != null && paramNames != null) {
             StringBuilder params = new StringBuilder();
             params = handleParams(params, args, Arrays.asList(paramNames));
-            sysLog.setParams(params.toString());
+            sysLog.setParams(JSONUtil.toJsonStr(params));
         }
 
         /*设置日志内容*/
@@ -147,7 +149,7 @@ public class LogAspect {
                 return handleParams(params, list.toArray(), paramsList);
 
             } else {
-                if (paramNames.get(i).equals(CommonConstants.TOKEN)) {
+                if (paramNames.get(i).equals(TokenConstant.TOKEN)) {
                     continue;
                 }
                 if (args[i] instanceof Serializable) {

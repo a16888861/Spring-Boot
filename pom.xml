@@ -41,6 +41,10 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <!-- poi版本号 -->
         <poi.version>3.17</poi.version>
+        <!-- Redis版本号 -->
+        <redis.version>2.3.12.RELEASE</redis.version>
+        <!-- jwt版本号 -->
+        <jwt.version>3.10.3</jwt.version>
     </properties>
 
     <!-- 环境变量 -->
@@ -109,12 +113,6 @@
             </exclusions>
         </dependency>
 
-        <!-- spring-boot-starter-log4j2 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
-
         <!-- spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -124,6 +122,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!-- spring-boot-starter-log4j2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <!--JWT依赖-->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
         <!-- spring-boot-starter-test -->
         <dependency>
@@ -156,6 +165,24 @@
             <artifactId>mybatis-plus-core</artifactId>
             <version>${mybatis-plus.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Redis相关 -->
+        <!-- spring boot starter data redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+        <!-- redis依赖commons-pool 这个依赖一定要添加 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <!-- redis config依赖spring-context-support 容器注入 这个依赖一定要添加 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
         </dependency>
 
         <!-- 工具 -->
@@ -196,7 +223,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${validator.version}</version>
         </dependency>
-
         <!-- json-smart -->
         <dependency>
             <groupId>net.minidev</groupId>

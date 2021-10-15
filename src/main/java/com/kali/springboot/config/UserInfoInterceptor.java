@@ -1,12 +1,26 @@
 package com.kali.springboot.config;
 
+import cn.hutool.json.JSONUtil;
+import com.kali.springboot.common.constant.CommonConstants;
+import com.kali.springboot.common.constant.TokenConstant;
+import com.kali.springboot.common.context.UserContextUtil;
+import com.kali.springboot.common.exception.BaseException;
+import com.kali.springboot.common.response.Response;
+import com.kali.springboot.common.response.ResponseEnum;
+import com.kali.springboot.common.util.JwtUtil;
+import com.kali.springboot.common.util.RedisUtil;
+import com.kali.springboot.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户信息拦截器，配合视图拦截器使用
@@ -18,6 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 public class UserInfoInterceptor implements HandlerInterceptor {
 
     private final ThreadLocal<Long> THREAD = new ThreadLocal<>();
+
+    @Resource
+    private RedisUtil redisUtil;
 
     /**
      * preHandle 请求前拦截
@@ -33,6 +50,51 @@ public class UserInfoInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         THREAD.set(System.currentTimeMillis());
+        /*获取请求头授权信息(也就是token和刷新token)*/
+        String authorization = request.getHeader(TokenConstant.AUTHORIZATION);
+        String xAuthorization = request.getHeader(TokenConstant.X_AUTHORIZATION);
+        log.info("Authorization:" + authorization);
+        log.info("X-Authorization:" + xAuthorization);
+        /*token为空，请求非法*/
+        if (StringUtils.isBlank(authorization) && StringUtils.isBlank(xAuthorization)) {
+            throw new BaseException(Response.fail(ResponseEnum.ILLEGAL.getMessage()).getMessage());
+        }
+        /*解析token信息*/
+        String claim = JwtUtil.getClaim(authorization.split(CommonConstants.SPACE)[1]);
+        String xClaim = JwtUtil.getClaim(xAuthorization.split(CommonConstants.SPACE)[1]);
+        log.info("用户token信息为：" + claim);
+        log.info("用户刷新token信息为：" + xClaim);
+        /*判断token是否存在(是否过期)*/
+        if (!redisUtil.hasKey(claim)) {
+            /*判断刷新token是否存在(是否过期) 不存在则判断刷新token*/
+            if (redisUtil.hasKey(xClaim)) {
+                /*刷新token没有过期，重新对token进行续签操作(续签时间30分钟)*/
+                long tokenExpiredTime = TimeUnit.SECONDS.toSeconds(1800);
+                redisUtil.set(claim, authorization, tokenExpiredTime);
+            } else {
+                response.setStatus(ResponseEnum.TOKEN_TIMEOUT.getCode());
+                try {
+                    /*重定向URL待添加*/
+                    response.sendRedirect("Token已过期");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                throw new BaseException(Response.fail(ResponseEnum.TOKEN_TIMEOUT.getMessage()).getMessage());
+            }
+        }
+        /*判断token是否错误*/
+        if (!authorization.equals(redisUtil.get(claim)) && !xAuthorization.equals(redisUtil.get(xClaim))) {
+            response.setStatus(ResponseEnum.TOKEN_ERROR.getCode());
+            try {
+                /*重定向URL待添加*/
+                response.sendRedirect("Token信息错误");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            throw new BaseException(Response.fail(ResponseEnum.TOKEN_ERROR.getMessage()).getMessage());
+        }
+        /*请求前向全局线程中存储用户信息*/
+        UserContextUtil.setUserInfo(JSONUtil.toBean((String) redisUtil.get(TokenConstant.USER_INFO), UserDTO.class));
         return Boolean.TRUE;
     }
 
@@ -61,6 +123,8 @@ public class UserInfoInterceptor implements HandlerInterceptor {
         long millis = System.currentTimeMillis();
         log.info(request.getServletPath() + "耗时：" + (millis - THREAD.get()) + "ms");
         THREAD.remove();
+        /*每次请求完成后，清理存储的用户线程*/
+        UserContextUtil.remove();
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

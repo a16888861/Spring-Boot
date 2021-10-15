@@ -2,7 +2,7 @@ package com.kali.springboot.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.kali.springboot.common.base.BaseEntity;
-import com.kali.springboot.dto.UserDTO;
+import com.kali.springboot.dto.RoleDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * 用户表Entity
+ * 系统-角色表
  *
  * @author Elliot
  */
@@ -21,78 +21,72 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@TableName("blog_user")
-public class User extends BaseEntity<User, UserDTO> implements Serializable {
+@TableName("blog_role")
+public class Role extends BaseEntity<Role, RoleDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户名
+     * 角色代码
+     */
+    private String code;
+
+    /**
+     * 角色名称
      */
     private String name;
 
     /**
-     * 密码
+     * 角色英文名称
      */
-    private String password;
+    private String enName;
 
     /**
-     * 邮箱
+     * 角色类型
      */
-    private String mail;
+    private String type;
 
     /**
-     * 手机号
-     */
-    private String phone;
-
-    /**
-     * 角色ID
-     */
-    private String roleId;
-
-    /**
-     * 年份
-     */
-    private String year;
-
-    /**
-     * 状态(0正常,1锁定,2审批)
+     * 状态
      */
     private String status;
 
+    /**
+     * 备注
+     */
+    private String remarks;
+
+
     @Override
-    public UserDTO transDTO() {
-        return UserDTO.builder().id(id)
+    public RoleDTO transDTO() {
+        return RoleDTO.builder().id(id)
+                .code(code)
                 .name(name)
-                .password(password)
-                .mail(mail)
-                .phone(phone)
-                .roleId(roleId)
-                .year(year)
+                .enName(enName)
+                .type(type)
                 .status(status)
                 .createBy(createBy)
                 .createDate(createDate)
                 .updateBy(updateBy)
                 .updateDate(updateDate)
+                .remarks(remarks)
                 .delFlag(delFlag)
                 .build();
     }
 
     @Override
-    public User recDTO(UserDTO dto) {
-        return User.builder().id(dto.getId())
+    public Role recDTO(RoleDTO dto) {
+        return Role.builder().id(dto.getId())
+                .code(dto.getCode())
                 .name(dto.getName())
-                .password(dto.getPassword())
-                .mail(dto.getMail())
-                .phone(dto.getPhone())
-                .roleId(dto.getRoleId())
-                .year(dto.getYear())
+                .enName(dto.getEnName())
+                .type(dto.getType())
                 .status(dto.getStatus())
                 .createBy(dto.getCreateBy())
                 .createDate(dto.getCreateDate())
                 .updateBy(dto.getUpdateBy())
                 .updateDate(dto.getUpdateDate())
+                .remarks(dto.getRemarks())
                 .delFlag(dto.getDelFlag())
                 .build();
     }

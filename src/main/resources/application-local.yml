@@ -14,6 +14,18 @@ spring:
       max-active: 200
       min-idle: 8
       max-wait: 60000
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    password:
+    timeout: 5000ms
+    jedis:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: -1ms
+        max-active: 8
   messages:
     encoding: UTF-8
     basename: i18n.message

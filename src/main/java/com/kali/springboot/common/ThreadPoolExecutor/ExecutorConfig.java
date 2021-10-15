@@ -1,7 +1,7 @@
 package com.kali.springboot.common.ThreadPoolExecutor;
 
 import com.kali.springboot.common.constant.CommonConstants;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author Elliot
  */
-@Slf4j
+@Log4j2
 @EnableAsync
 @Configuration
 public class ExecutorConfig {

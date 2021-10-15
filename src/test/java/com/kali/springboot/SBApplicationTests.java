@@ -12,5 +12,4 @@ class SBApplicationTests {
     void contextLoads() {
         log.info("测试方法输出:contextLoads===>{}", "SpringBootTest");
     }
-
 }

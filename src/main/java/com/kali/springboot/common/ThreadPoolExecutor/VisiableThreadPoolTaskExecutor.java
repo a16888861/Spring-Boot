@@ -1,7 +1,7 @@
 package com.kali.springboot.common.ThreadPoolExecutor;
 
 import cn.hutool.core.util.ObjectUtil;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.concurrent.ListenableFuture;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author Elliot
  */
-@Slf4j
+@Log4j2
 public class VisiableThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
     private void showThreadPoolInfo(String prefix) {

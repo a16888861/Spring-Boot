@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Elliot
+ */
 @Log4j2
 @RestController
 @Api(value = "首页信息", tags = "首页信息接口")
@@ -57,7 +60,7 @@ public class IndexController {
         result.add("Version : " + version);
         result.add("Project Description : " + description);
         result.add("Author : Elliot");
-        log.info("result:{}",result);
+        log.info("result:{}", result);
         return Response.success(ResponseEnum.SUCCESS.getMessage(), result);
     }
 }

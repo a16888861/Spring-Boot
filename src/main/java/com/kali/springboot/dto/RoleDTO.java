@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 /**
- * 用户表DTO
+ * 系统-角色表
  *
  * @author Elliot
  */
@@ -17,43 +17,37 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-public class UserDTO extends BaseDTO implements Serializable {
+public class RoleDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户名
+     * 角色代码
+     */
+    private String code;
+
+    /**
+     * 角色名称
      */
     private String name;
 
     /**
-     * 密码
+     * 角色英文名称
      */
-    private String password;
+    private String enName;
 
     /**
-     * 邮箱
+     * 角色类型
      */
-    private String mail;
+    private String type;
 
     /**
-     * 手机号
-     */
-    private String phone;
-
-    /**
-     * 角色ID
-     */
-    private String roleId;
-
-    /**
-     * 年份
-     */
-    private String year;
-
-    /**
-     * 状态(0正常,1锁定,2审批)
+     * 状态
      */
     private String status;
 
+    /**
+     * 备注
+     */
+    private String remarks;
 }

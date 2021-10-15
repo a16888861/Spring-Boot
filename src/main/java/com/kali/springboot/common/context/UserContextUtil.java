@@ -1,6 +1,6 @@
 package com.kali.springboot.common.context;
 
-import com.kali.springboot.common.constant.CommonConstants;
+import com.kali.springboot.common.constant.TokenConstant;
 import com.kali.springboot.dto.UserDTO;
 
 import java.util.HashMap;
@@ -51,7 +51,7 @@ public class UserContextUtil {
      * @return 用户信息
      */
     public static UserDTO getUserInfo() {
-        return (UserDTO) get(CommonConstants.USER_INFO);
+        return (UserDTO) get(TokenConstant.USER_INFO);
     }
 
     /**
@@ -60,7 +60,7 @@ public class UserContextUtil {
      * @param userDTO 用户信息
      */
     public static void setUserInfo(UserDTO userDTO) {
-        set(CommonConstants.USER_INFO, userDTO);
+        set(TokenConstant.USER_INFO, userDTO);
     }
 
     /**
