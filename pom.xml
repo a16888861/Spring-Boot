@@ -27,6 +27,8 @@
         <druid.version>1.2.8</druid.version>
         <!-- mybatis-plus版本号 -->
         <mybatis-plus.version>3.4.3.2</mybatis-plus.version>
+        <!-- mybatis版本号 -->
+        <mybatis.version>3.5.6</mybatis.version>
         <!-- commons-lang3版本号 -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <!-- lombok -->
@@ -164,6 +166,19 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-core</artifactId>
             <version>${mybatis-plus.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>compile</scope>
+        </dependency>
+        <!--Base实现类用-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
             <scope>compile</scope>
         </dependency>
 

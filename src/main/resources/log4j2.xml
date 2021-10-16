@@ -56,7 +56,7 @@
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
         <logger name="org.springframework" level="INFO"/>
         <logger name="org.mybatis" level="INFO"/>
-        <logger name="com.kali.springboot" level="DEBUG" additivity="true"/>
+        <logger name="com.kali.blog" level="DEBUG" additivity="true"/>
         <logger name="org.springframework" level="ERROR" additivity="true"/>
         <logger name="java.sql.Connection" level="INFO"/>
         <logger name="java.sql.Statement" level="INFO"/>

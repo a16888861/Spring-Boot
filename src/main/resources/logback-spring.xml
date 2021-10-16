@@ -48,7 +48,7 @@
         </layout>
     </appender>
 
-    <logger name="com.kali.springboot" level="debug" additivity="true"/>
+    <logger name="com.kali.blog" level="debug" additivity="true"/>
     <logger name="org.springframework" level="error" additivity="true"/>
     <logger name="java.sql.Connection" level="info"/>
     <logger name="java.sql.Statement" level="info"/>
