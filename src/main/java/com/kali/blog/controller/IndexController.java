@@ -21,7 +21,7 @@ import java.util.List;
 @Log4j2
 @RestController
 @Api(value = "首页信息", tags = "首页信息接口")
-@ApiSupport(order = 1, author = "Elliot")
+@ApiSupport(order = 0, author = "Elliot")
 public class IndexController {
 
     /**

@@ -21,13 +21,6 @@ public class RoleVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 组别id
-     */
-    @ApiModelProperty(value = "组别id", name = "groupId", hidden = false, required = true, position = 0)
-    @NotEmpty(message = "role.code.NotEmpty")
-    private String groupId;
-
-    /**
      * 角色代码
      */
     @ApiModelProperty(value = "角色代码", name = "code", hidden = false, required = true, position = 2)

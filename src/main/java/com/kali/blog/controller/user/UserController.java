@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
- * 用户表Controller
+ * 用户表 前端控制器
  *
  * @author Elliot
  * @date 2021/10/13 14:52
