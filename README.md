@@ -9,4 +9,5 @@ Spring-Boot 框架搭建的博客后台，目前实现用户注册和单点登�
 * Redis版本号：6.2.5
 * Spring Boot版本号：2.5.5
 * 文档采用Knife4j-版本号：3.0.3
-* 
+
+* 公共定时任务位置：com.kali.blog.common.CommonScheduling
