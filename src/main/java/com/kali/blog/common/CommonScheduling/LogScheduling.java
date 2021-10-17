@@ -30,9 +30,17 @@ public class LogScheduling {
      * 每天凌晨2:00删除15天前的日志数据
      */
     @Scheduled(cron = "0 0 2 1/1 * ? ")
+//    @Scheduled(cron = "0/60 * * * * ? ")
     public void deleteLogEveryDay() {
-        log.info("开始删除15天前的日志数据～");
-        logMapper.delete(new LambdaQueryWrapper<SysLogEntity>().le(SysLogEntity::getCreateDate, LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
-        log.info("15天前的日志数据清除完成～");
+        int count = logMapper.selectCount(new LambdaQueryWrapper<SysLogEntity>().le(SysLogEntity::getCreateDate, LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))).intValue();
+        log.info("15天前的数据共有{}条", count);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年:MM月:dd日-HH时:mm分:ss秒");
+        if (count > 0) {
+            log.info("开始删除{}及其之前的日志数据 - 执行时间{{}}", LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy年MM月dd日")), LocalDateTime.now().format(dateTimeFormatter));
+            logMapper.delete(new LambdaQueryWrapper<SysLogEntity>().le(SysLogEntity::getCreateDate, LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+            log.info("日志数据清除完成～");
+        } else {
+            log.info("日志数据无需清理 - 执行时间{{}}", LocalDateTime.now().format(dateTimeFormatter));
+        }
     }
 }
