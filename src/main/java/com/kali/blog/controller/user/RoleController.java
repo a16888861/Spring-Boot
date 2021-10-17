@@ -73,7 +73,7 @@ public class RoleController extends BaseController {
                     "查询状态使用enable(启用)和disable(禁用)<br>" +
                     "type条件暂未定义")
     @ApiOperationSupport(author = "Elliot", order = 1)
-    public ResponseInfo<CommonPage<RoleDTO>> selectRolePage(@RequestBody RoleVOPage roleVoPage, BindingResult bindingResult) {
+    public ResponseInfo<CommonPage<RoleDTO>> selectRolePage(@RequestBody @Valid RoleVOPage roleVoPage, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return Response.fail(bindingResult.getAllErrors().get(0).getDefaultMessage());
         }

@@ -6,9 +6,12 @@ import com.kali.blog.common.base.BaseDTO;
 import com.kali.blog.common.base.BaseEntity;
 import com.kali.blog.common.base.BaseServiceImpl;
 import com.kali.blog.common.context.UserContextUtil;
+import com.kali.blog.common.enums.RoleEnums;
 import com.kali.blog.common.util.Md5Utils;
 import com.kali.blog.dto.UserDTO;
+import com.kali.blog.entity.Role;
 import com.kali.blog.entity.User;
+import com.kali.blog.mapper.RoleMapper;
 import com.kali.blog.mapper.UserMapper;
 import com.kali.blog.service.UserService;
 import com.kali.blog.vo.LoginVO;
@@ -17,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 
 /**
@@ -28,6 +32,9 @@ import java.time.LocalDateTime;
 @Service("userService")
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User, UserDTO> implements UserService {
+
+    @Resource
+    private RoleMapper roleMapper;
 
     /**
      * 创建用户
@@ -47,9 +54,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User, UserDTO> 
             userDTO.setPassword(Md5Utils.md5Hex(userDTO.getPassword()));
         }
         /*注册时默认为普通用户*/
-//        if (StringUtil.isBlank(userDTO.getRoleId())){
-//            userDTO.setRoleId();
-//        }
+        Role role = roleMapper.selectOne(new LambdaQueryWrapper<Role>().eq(BaseEntity::getDelFlag, BaseEntity.DEL_FLAG_NORMAL)
+                .eq(Role::getCode, RoleEnums.ROLE_REGISTER_USER.getRoleCode()));
+        if (StringUtils.isBlank(userDTO.getRoleId())){
+            userDTO.setRoleId(role.getId());
+        }
         userDTO.setYear(String.valueOf(LocalDateTime.now().getYear()));
         /*用户默认为审核状态*/
         userDTO.setStatus(BaseDTO.DEL_FLAG_AUDIT);
