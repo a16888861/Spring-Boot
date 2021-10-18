@@ -3,6 +3,8 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+// 引入html-webpack-plugin组件，这个模块可以为html文件中引入的外部资源
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -20,6 +22,14 @@ const createLintingRule = () => ({
 })
 
 module.exports = {
+  // 图标配置
+  plugins:[
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      favicon: 'favicon.ico',
+      inject: true
+    })
+  ],
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'

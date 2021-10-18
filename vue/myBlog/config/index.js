@@ -10,10 +10,20 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    // 请求代理配置
+    proxyTable: {
+      // api为代理接口
+      '/api/': {
+        // 这里我代理到本地服务
+        target: 'http://localhost:7000/',
+        changeOrigin: true
+      }
+    },
 
     // Various Dev Server settings
+    // 地址
     host: 'localhost', // can be overwritten by process.env.HOST
+    // 端口号
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
