@@ -44,7 +44,7 @@ public class UserController extends BaseController {
      */
     @ApiOperation(value = "用户注册", produces = "application/json",
             notes = "用户注册调用的接口<br>" +
-                    "如果创建参数没有加roleId，则默认为普通用户<br>" +
+                    "如果roleId不填写，则默认为普通用户<br>" +
                     "注册后默认为审核状态")
     @ApiOperationSupport(author = "Elliot", order = 0)
     @PostMapping("register")

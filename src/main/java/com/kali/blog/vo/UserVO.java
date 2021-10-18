@@ -54,6 +54,6 @@ public class UserVO implements Serializable {
     /**
      * 角色ID
      */
-    @ApiModelProperty(value = "角色ID", name = "roleId", hidden = true, required = false, position = 6)
+    @ApiModelProperty(value = "角色ID", name = "roleId", hidden = false, required = false, position = 6)
     private String roleId;
 }

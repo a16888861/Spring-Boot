@@ -4,7 +4,9 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import com.kali.blog.common.util.BeanUtil;
 import com.kali.blog.vo.LoginVO;
+import com.kali.blog.vo.RoleVO;
 import com.kali.blog.vo.UserTokenVO;
 import com.kali.blog.common.aspect.Log;
 import com.kali.blog.common.base.BaseController;
@@ -137,6 +139,7 @@ public class AccessController extends BaseController {
         userDTO.setPassword(null);
         /*查询角色信息*/
         RoleDTO roleDTO = roleService.selectById(userDTO.getRoleId());
+        RoleVO roleVO = BeanUtil.copyProperties(roleDTO, RoleVO.class);
         /*获取Token信息*/
         String token = (String) redisUtil.get(TokenConstant.USER_TOKEN + CommonConstants.HORIZONTAL_BAR + userDTO.getPhone() + CommonConstants.HORIZONTAL_BAR + userDTO.getMail());
         Integer tokenExpiredTime = new Long(redisUtil.getExpire(TokenConstant.USER_TOKEN + CommonConstants.HORIZONTAL_BAR + userDTO.getPhone() + CommonConstants.HORIZONTAL_BAR + userDTO.getMail())).intValue();
@@ -146,7 +149,7 @@ public class AccessController extends BaseController {
         /*构建返回信息*/
         UserTokenVO userToken = UserTokenVO.builder().token(token).tokenExpiredTime(tokenExpiredTime).refreshToken(refreshToken).refreshTokenExpiredTime(refreshTokenExpiredTime).build();
         UserInfoVO userInfoVO = UserInfoVO.builder()
-                .userDTO(userDTO).roleDTO(roleDTO).userTokenVO(userToken).build();
+                .userDTO(userDTO).roleVO(roleVO).userTokenVO(userToken).build();
         return Response.success(ResponseEnum.SUCCESS.getMessage(), userInfoVO);
     }
 

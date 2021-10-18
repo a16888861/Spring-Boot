@@ -53,7 +53,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User, UserDTO> 
         } else {
             userDTO.setPassword(Md5Utils.md5Hex(userDTO.getPassword()));
         }
-        /*注册时默认为普通用户*/
+        /*如未选择角色 用户注册时默认为普通用户*/
         Role role = roleMapper.selectOne(new LambdaQueryWrapper<Role>().eq(BaseEntity::getDelFlag, BaseEntity.DEL_FLAG_NORMAL)
                 .eq(Role::getCode, RoleEnums.ROLE_REGISTER_USER.getRoleCode()));
         if (StringUtils.isBlank(userDTO.getRoleId())){
