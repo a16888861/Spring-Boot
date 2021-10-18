@@ -28,7 +28,7 @@ import javax.validation.Valid;
  * @date 2021/10/13 14:52
  */
 @Api(value = "用户信息", tags = "用户信息接口")
-@ApiSupport(order = 2, author = "Elliot")
+@ApiSupport(order = 3, author = "Elliot")
 @RestController
 @RequestMapping("user")
 public class UserController extends BaseController {

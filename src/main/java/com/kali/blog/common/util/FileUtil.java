@@ -6,6 +6,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.kali.blog.common.exception.BaseException;
+import lombok.extern.log4j.Log4j2;
 import org.apache.poi.util.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,9 +26,11 @@ import java.util.Random;
 
 /**
  * File工具类，扩展 hutool 工具包
+ *
  * @author Zheng Jie
  * @date 2018-12-27
  */
+@Log4j2
 public class FileUtil extends cn.hutool.core.io.FileUtil {
 
     /**
@@ -274,9 +277,10 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
 
     /**
      * 下载文件
-     * @param request /
+     *
+     * @param request  /
      * @param response /
-     * @param file /
+     * @param file     /
      */
     public static void downloadFile(HttpServletRequest request, HttpServletResponse response, File file, boolean deleteOnExit) {
         response.setCharacterEncoding(request.getCharacterEncoding());
@@ -309,6 +313,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
 
     /**
      * 读取json文件，返回json串
+     *
      * @param fileName
      * @return
      */
@@ -340,7 +345,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
             FileInputStream in = (FileInputStream) file.getInputStream();
             srcImage = javax.imageio.ImageIO.read(in);
         } catch (IOException e) {
-            System.out.println("读取图片文件出错！" + e.getMessage());
+            log.error("读取图片文件出错！" + e.getMessage(), e);
         }
         return srcImage;
     }
@@ -369,6 +374,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
 
     /**
      * 上传文件重命名
+     *
      * @return 新的文件名
      */
     public static StringBuffer fileRename() {
@@ -385,6 +391,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
 
     /**
      * 对中文字符进行UTF-8编码
+     *
      * @param source 要转义的字符串
      * @return
      * @throws UnsupportedEncodingException
@@ -405,6 +412,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
 
     /**
      * 判断是不是中文字符
+     *
      * @param c
      * @return
      */

@@ -20,6 +20,9 @@ public class RoleVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "角色Id", name = "id", hidden = true, required = false, position = 1)
+    private String id;
+
     /**
      * 角色代码
      */

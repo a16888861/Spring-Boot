@@ -33,7 +33,7 @@ import javax.validation.Valid;
 @RestController("roleController")
 @RequestMapping("/userInfo/role")
 @Api(value = "角色信息", tags = "角色信息接口")
-@ApiSupport(order = 3, author = "Elliot")
+@ApiSupport(order = 4, author = "Elliot")
 public class RoleController extends BaseController {
 
     @Resource

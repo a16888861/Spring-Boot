@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @Api(value = "登陆信息", tags = "登陆信息接口")
-@ApiSupport(order = 1, author = "Elliot")
+@ApiSupport(order = 2, author = "Elliot")
 @Slf4j
 @RequestMapping("access")
 public class AccessController extends BaseController {
