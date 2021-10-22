@@ -3,6 +3,7 @@ package com.kali.blog.common.CommonScheduling;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kali.blog.common.aspect.SysLogEntity;
 import com.kali.blog.common.aspect.SysLogMapper;
+import com.kali.blog.common.constant.CommonConstants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -34,13 +35,12 @@ public class LogScheduling {
     public void deleteLogEveryDay() {
         int count = logMapper.selectCount(new LambdaQueryWrapper<SysLogEntity>().le(SysLogEntity::getCreateDate, LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))).intValue();
         log.info("15天前的数据共有{}条", count);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年:MM月:dd日-HH时:mm分:ss秒");
         if (count > 0) {
-            log.info("开始删除{}及其之前的日志数据 - 执行时间{{}}", LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy年MM月dd日")), LocalDateTime.now().format(dateTimeFormatter));
+            log.info("开始删除{}及其之前的日志数据 - 执行时间{{}}", LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy年MM月dd日")), LocalDateTime.now().format(CommonConstants.DATE_TIME_FORMATTER));
             logMapper.delete(new LambdaQueryWrapper<SysLogEntity>().le(SysLogEntity::getCreateDate, LocalDateTime.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
             log.info("日志数据清除完成～");
         } else {
-            log.info("日志数据无需清理 - 执行时间{{}}", LocalDateTime.now().format(dateTimeFormatter));
+            log.info("日志数据无需清理 - 执行时间{{}}", LocalDateTime.now().format(CommonConstants.DATE_TIME_FORMATTER));
         }
     }
 }

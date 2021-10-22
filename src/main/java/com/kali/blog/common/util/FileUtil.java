@@ -5,11 +5,16 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.kali.blog.common.aspect.LogAspect;
+import com.kali.blog.common.constant.CommonConstants;
 import com.kali.blog.common.exception.BaseException;
+import com.kali.blog.dto.SysFileUploadDTO;
+import com.kali.blog.service.SysFileUploadService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.util.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,19 +24,23 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 /**
- * File工具类，扩展 hutool 工具包
+ * File工具类，扩展 Hutool 工具包
  *
  * @author Zheng Jie
  * @date 2018-12-27
  */
 @Log4j2
 public class FileUtil extends cn.hutool.core.io.FileUtil {
+
+    @Resource
+    private static SysFileUploadService SYS_FILE_SERVICE;
 
     /**
      * 定义GB的计算常量
@@ -140,21 +149,33 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     /**
      * 将文件名解析成文件的上传路径
      */
-    public static File upload(MultipartFile file, String filePath) {
-        //String name = getFileNameNoEx(file.getOriginalFilename());
+    public static File upload(HttpServletRequest request, MultipartFile file, String filePath) {
+        /*原文件名-不带扩展名的文件名*/
+        String name = getFileNameNoEx(file.getOriginalFilename());
+        /*文件扩展名，不带.*/
         String suffix = getExtensionName(file.getOriginalFilename());
+        /*上传文件重命名*/
         StringBuffer nowStr = fileRename();
         try {
             String fileName = nowStr + "." + suffix;
+            /*文件路径*/
             String path = filePath + fileName;
-            // getCanonicalFile 可解析正确各种路径
+            /*getCanonicalFile 可解析正确各种路径(文件真实路径)*/
             File dest = new File(path).getCanonicalFile();
-            // 检测是否存在目录
+            /*检测是否存在目录*/
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
-            // 文件写入
+            /*文件写入*/
             file.transferTo(dest);
+            /*获取操作者的IP地址*/
+            String clientIpAddress = LogAspect.getClientIpAddress(request);
+            log.info("开始记录上传位置:{上传原文件名为:{},文件重命名:{},文件扩展名:{},文件夹为:{},文件真实路径为:{} - 执行时间:{{}}}",
+                    name, nowStr, suffix, path, dest, LocalDateTime.now().format(CommonConstants.DATE_TIME_FORMATTER));
+            SYS_FILE_SERVICE.insert(SysFileUploadDTO.builder()
+                    .originalName(name).fileName(nowStr.toString()).fileSize(String.valueOf(file.getSize()))
+                    .fileSuffix(suffix).fileLocation(filePath).fileFullAddress(dest.getCanonicalPath()).ip(clientIpAddress).build());
+            log.info("文件上传结束～");
             return dest;
         } catch (Exception e) {
             e.printStackTrace();

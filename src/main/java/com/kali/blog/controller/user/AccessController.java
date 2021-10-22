@@ -4,10 +4,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
-import com.kali.blog.common.util.BeanUtil;
-import com.kali.blog.vo.LoginVO;
-import com.kali.blog.vo.RoleVO;
-import com.kali.blog.vo.UserTokenVO;
 import com.kali.blog.common.aspect.Log;
 import com.kali.blog.common.base.BaseController;
 import com.kali.blog.common.base.BaseEntity;
@@ -16,6 +12,7 @@ import com.kali.blog.common.constant.TokenConstant;
 import com.kali.blog.common.response.Response;
 import com.kali.blog.common.response.ResponseEnum;
 import com.kali.blog.common.response.ResponseInfo;
+import com.kali.blog.common.util.BeanUtil;
 import com.kali.blog.common.util.JwtUtil;
 import com.kali.blog.common.util.Md5Utils;
 import com.kali.blog.common.util.RedisUtil;
@@ -23,10 +20,13 @@ import com.kali.blog.dto.RoleDTO;
 import com.kali.blog.dto.UserDTO;
 import com.kali.blog.service.RoleService;
 import com.kali.blog.service.UserService;
+import com.kali.blog.vo.LoginVO;
+import com.kali.blog.vo.RoleVO;
 import com.kali.blog.vo.UserInfoVO;
+import com.kali.blog.vo.UserTokenVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +40,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Elliot
  */
+@Log4j2
 @RestController
 @Api(value = "登陆信息", tags = "登陆信息接口")
 @ApiSupport(order = 2, author = "Elliot")
-@Slf4j
 @RequestMapping("access")
 public class AccessController extends BaseController {
 

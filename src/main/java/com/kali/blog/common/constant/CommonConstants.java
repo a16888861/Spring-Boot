@@ -1,5 +1,7 @@
 package com.kali.blog.common.constant;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author Elliot
  */
@@ -54,4 +56,10 @@ public class CommonConstants {
      * 线程池中的线程的名称前缀
      */
     public static final String ASYNC_EXECUTOR_THREAD_NAME_PREFIX = "async-service-";
+
+    /*----------------------------------------日期相关----------------------------------------*/
+    /**
+     * 日期格式(yyyy年:MM月:dd日-HH时:mm分:ss秒)
+     */
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy年:MM月:dd日-HH时:mm分:ss秒");
 }

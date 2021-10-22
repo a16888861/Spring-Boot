@@ -14,9 +14,9 @@ import java.io.Serializable;
  * @author Elliot
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
 public class RoleDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

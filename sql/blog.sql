@@ -11,7 +11,7 @@
  Target Server Version : 50705
  File Encoding         : 65001
 
- Date: 17/10/2021 23:35:34
+ Date: 22/10/2021 23:13:10
 */
 
 SET NAMES utf8mb4;
@@ -77,6 +77,34 @@ INSERT INTO `blog_user` VALUES ('1448571832049061888', '张泱森', '°c2◊20a6
 COMMIT;
 
 -- ----------------------------
+-- Table structure for sys_file_upload
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_file_upload`;
+CREATE TABLE `sys_file_upload` (
+                                   `id` varchar(32) NOT NULL COMMENT '标识符',
+                                   `original_name` varchar(100) DEFAULT NULL COMMENT '文件原始名称',
+                                   `file_name` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件名称',
+                                   `file_size` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件大小',
+                                   `file_suffix` varchar(5) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件后缀(类型)',
+                                   `file_location` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件相对位置',
+                                   `file_full_address` varchar(200) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件完整位置',
+                                   `ip` varchar(15) CHARACTER SET utf8 DEFAULT NULL COMMENT '上传者ip地址',
+                                   `file_remark` varchar(15) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件说明(备注)',
+                                   `create_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '创建人',
+                                   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+                                   `update_by` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '修改人',
+                                   `update_date` datetime DEFAULT NULL COMMENT '修改时间',
+                                   `del_flag` char(1) CHARACTER SET utf8 DEFAULT NULL COMMENT '删除状态(0正常1删除)',
+                                   PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统-文件上传';
+
+-- ----------------------------
+-- Records of sys_file_upload
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
 -- Table structure for sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
@@ -99,6 +127,7 @@ CREATE TABLE `sys_log` (
 -- Records of sys_log
 -- ----------------------------
 BEGIN;
+INSERT INTO `sys_log` VALUES ('1449763091347992578', '0:0:0:0:0:0:0:1', 'controller', 'com.kali.blog.controller.user.AccessController.getUserInfoVO()', '获取当前登陆的用户信息', '32', ' request:org.apache.catalina.connector.RequestFacade@3908db1d', '2021', '1430109634181881856', '2021-10-17 23:43:51');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
