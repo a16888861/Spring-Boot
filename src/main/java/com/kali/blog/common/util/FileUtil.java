@@ -5,16 +5,11 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
-import com.kali.blog.common.aspect.LogAspect;
-import com.kali.blog.common.constant.CommonConstants;
 import com.kali.blog.common.exception.BaseException;
-import com.kali.blog.dto.SysFileUploadDTO;
-import com.kali.blog.service.SysFileUploadService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.util.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +19,6 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +32,6 @@ import java.util.Random;
  */
 @Log4j2
 public class FileUtil extends cn.hutool.core.io.FileUtil {
-
-    @Resource
-    private static SysFileUploadService SYS_FILE_SERVICE;
 
     /**
      * 定义GB的计算常量
@@ -149,9 +140,9 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     /**
      * 将文件名解析成文件的上传路径
      */
-    public static File upload(HttpServletRequest request, MultipartFile file, String filePath) {
+    public static File upload(MultipartFile file, String filePath) {
         /*原文件名-不带扩展名的文件名*/
-        String name = getFileNameNoEx(file.getOriginalFilename());
+//        String name = getFileNameNoEx(file.getOriginalFilename());
         /*文件扩展名，不带.*/
         String suffix = getExtensionName(file.getOriginalFilename());
         /*上传文件重命名*/
@@ -168,14 +159,6 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
             }
             /*文件写入*/
             file.transferTo(dest);
-            /*获取操作者的IP地址*/
-            String clientIpAddress = LogAspect.getClientIpAddress(request);
-            log.info("开始记录上传位置:{上传原文件名为:{},文件重命名:{},文件扩展名:{},文件夹为:{},文件真实路径为:{} - 执行时间:{{}}}",
-                    name, nowStr, suffix, path, dest, LocalDateTime.now().format(CommonConstants.DATE_TIME_FORMATTER));
-            SYS_FILE_SERVICE.insert(SysFileUploadDTO.builder()
-                    .originalName(name).fileName(nowStr.toString()).fileSize(String.valueOf(file.getSize()))
-                    .fileSuffix(suffix).fileLocation(filePath).fileFullAddress(dest.getCanonicalPath()).ip(clientIpAddress).build());
-            log.info("文件上传结束～");
             return dest;
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,6 +166,13 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         return null;
     }
 
+    /**
+     * 文件转Base64
+     *
+     * @param file 文件
+     * @return base64
+     * @throws Exception 异常
+     */
     public static String fileToBase64(File file) throws Exception {
         FileInputStream inputFile = new FileInputStream(file);
         String base64;

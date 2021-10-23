@@ -1,13 +1,13 @@
 package com.kali.blog.controller.file;
 
 
-import cn.hutool.core.util.ObjectUtil;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import com.kali.blog.common.aspect.Log;
 import com.kali.blog.common.base.BaseController;
 import com.kali.blog.common.response.Response;
 import com.kali.blog.common.response.ResponseInfo;
-import com.kali.blog.common.util.FileUtil;
+import com.kali.blog.service.SysFileUploadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,8 +20,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 
 /**
  * 系统-文件上传 前端控制器
@@ -36,6 +36,9 @@ import java.io.File;
 @ApiSupport(order = 5, author = "Elliot")
 public class SysFileUploadController extends BaseController {
 
+    @Resource
+    private SysFileUploadService service;
+
     /**
      * 上传文件
      *
@@ -43,6 +46,7 @@ public class SysFileUploadController extends BaseController {
      * @param filePath 要上传的文件路径
      * @return 上传结果
      */
+    @Log("公共上传文件")
     @PostMapping(value = "uploadFile", consumes = "multipart/*", headers = "content-type=multipart/form-data")
     @ApiOperation(value = "上传文件", notes = "上传文件接口")
     @ApiOperationSupport(author = "Elliot", order = 0)
@@ -50,10 +54,6 @@ public class SysFileUploadController extends BaseController {
             @RequestPart(value = "file") MultipartFile file,
             @ApiParam(value = "文件上传路径", type = "String", required = true) String filePath) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        File upload = FileUtil.upload(request, file, filePath);
-        if (ObjectUtil.isNull(upload)) {
-            return judgeResult(0);
-        }
-        return judgeResult(1);
+        return judgeResult(service.uploadFile(request, file, filePath));
     }
 }
