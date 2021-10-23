@@ -11,7 +11,7 @@
  Target Server Version : 50705
  File Encoding         : 65001
 
- Date: 22/10/2021 23:13:10
+ Date: 23/10/2021 23:13:16
 */
 
 SET NAMES utf8mb4;
@@ -85,7 +85,8 @@ CREATE TABLE `sys_file_upload` (
                                    `original_name` varchar(100) DEFAULT NULL COMMENT '文件原始名称',
                                    `file_name` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件名称',
                                    `file_size` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件大小',
-                                   `file_suffix` varchar(5) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件后缀(类型)',
+                                   `file_suffix` varchar(5) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件后缀',
+                                   `file_type` varchar(5) DEFAULT NULL COMMENT '文件类型',
                                    `file_location` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件相对位置',
                                    `file_full_address` varchar(200) CHARACTER SET utf8 DEFAULT NULL COMMENT '文件完整位置',
                                    `ip` varchar(15) CHARACTER SET utf8 DEFAULT NULL COMMENT '上传者ip地址',
@@ -102,6 +103,10 @@ CREATE TABLE `sys_file_upload` (
 -- Records of sys_file_upload
 -- ----------------------------
 BEGIN;
+INSERT INTO `sys_file_upload` VALUES ('1451895335561617408', 'blog.sql', '20211023205637557759.sql', '6776', 'sql', 'other', '/Volumes/Application/Download/upload/', '/Volumes/Application/Download/upload/20211023205637557759.sql', '0:0:0:0:0:0:0:1', NULL, '1430109634181881856', '2021-10-23 20:56:38', NULL, NULL, '0');
+INSERT INTO `sys_file_upload` VALUES ('1451895340473147392', 'blog.sql', '20211023205638735784.sql', '6776', 'sql', 'other', '/Volumes/Application/Download/upload/', '/Volumes/Application/Download/upload/20211023205638735784.sql', '0:0:0:0:0:0:0:1', NULL, '1430109634181881856', '2021-10-23 20:56:39', NULL, NULL, '0');
+INSERT INTO `sys_file_upload` VALUES ('1451895457552949248', '004.jpeg', '20211023205706649433.jpeg', '92315', 'jpeg', 'pic', '/Volumes/Application/Download/upload/', '/Volumes/Application/Download/upload/20211023205706649433.jpeg', '0:0:0:0:0:0:0:1', NULL, '1430109634181881856', '2021-10-23 20:57:07', NULL, NULL, '0');
+INSERT INTO `sys_file_upload` VALUES ('1451895461755641856', '004.jpeg', '20211023205707651571.jpeg', '92315', 'jpeg', 'pic', '/Volumes/Application/Download/upload/', '/Volumes/Application/Download/upload/20211023205707651571.jpeg', '0:0:0:0:0:0:0:1', NULL, '1430109634181881856', '2021-10-23 20:57:08', NULL, NULL, '0');
 COMMIT;
 
 -- ----------------------------
@@ -127,7 +132,11 @@ CREATE TABLE `sys_log` (
 -- Records of sys_log
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_log` VALUES ('1449763091347992578', '0:0:0:0:0:0:0:1', 'controller', 'com.kali.blog.controller.user.AccessController.getUserInfoVO()', '获取当前登陆的用户信息', '32', ' request:org.apache.catalina.connector.RequestFacade@3908db1d', '2021', '1430109634181881856', '2021-10-17 23:43:51');
+INSERT INTO `sys_log` VALUES ('1451895336061902849', '0:0:0:0:0:0:0:1', 'controller', 'com.kali.blog.controller.file.SysFileUploadController.uploadFile()', '公共上传文件', '132', ' file:\"org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@26831a6b\" filePath:\"/Volumes/Application/Download/upload/\"', '2021', '1430109634181881856', '2021-10-23 20:56:38');
+INSERT INTO `sys_log` VALUES ('1451895340499476482', '0:0:0:0:0:0:0:1', 'controller', 'com.kali.blog.controller.file.SysFileUploadController.uploadFile()', '公共上传文件', '7', ' file:\"org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@4823648d\" filePath:\"/Volumes/Application/Download/upload/\"', '2021', '1430109634181881856', '2021-10-23 20:56:39');
+INSERT INTO `sys_log` VALUES ('1451895457579278338', '0:0:0:0:0:0:0:1', 'controller', 'com.kali.blog.controller.file.SysFileUploadController.uploadFile()', '公共上传文件', '7', ' file:\"org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@31d2bcf2\" filePath:\"/Volumes/Application/Download/upload/\"', '2021', '1430109634181881856', '2021-10-23 20:57:07');
+INSERT INTO `sys_log` VALUES ('1451895461790359554', '0:0:0:0:0:0:0:1', 'controller', 'com.kali.blog.controller.file.SysFileUploadController.uploadFile()', '公共上传文件', '8', ' file:\"org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@a73ba52\" filePath:\"/Volumes/Application/Download/upload/\"', '2021', '1430109634181881856', '2021-10-23 20:57:08');
+INSERT INTO `sys_log` VALUES ('1451928267954343937', '0:0:0:0:0:0:0:1', 'controller', 'com.kali.blog.controller.file.SysFileUploadController.selectFileList()', '查询文件列表分页信息', '96', ' filePage:\"SysFileUploadVOPage(pageCurrent=0, pageSize=10, originalName=, fileName=, fileSize=, fileSuffix=, fileType=, fileLocation=, fileFullAddress=, ip=, fileRemark=, createBy=, createDate=null)\" bindingResult:\"org.springframework.validation.BeanPropertyBindingResult: 0 errors\"', '2021', '1430109634181881856', '2021-10-23 23:07:29');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

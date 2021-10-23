@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 /**
  * 系统-文件上传
  *
@@ -18,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Accessors(chain = true)
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class SysFileUploadDTO extends BaseDTO {
+public class SysFileUploadDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,9 +40,14 @@ public class SysFileUploadDTO extends BaseDTO {
     private String fileSize;
 
     /**
-     * 文件后缀(类型)
+     * 文件后缀
      */
     private String fileSuffix;
+
+    /**
+     * 文件类型
+     */
+    private String fileType;
 
     /**
      * 文件相对位置
@@ -61,6 +68,4 @@ public class SysFileUploadDTO extends BaseDTO {
      * 文件说明(备注)
      */
     private String fileRemark;
-
-
 }

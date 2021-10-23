@@ -38,9 +38,14 @@ public class SysFileUpload extends BaseEntity<SysFileUpload, SysFileUploadDTO> {
     private String fileSize;
 
     /**
-     * 文件后缀(类型)
+     * 文件后缀
      */
     private String fileSuffix;
+
+    /**
+     * 文件类型
+     */
+    private String fileType;
 
     /**
      * 文件相对位置
@@ -70,6 +75,7 @@ public class SysFileUpload extends BaseEntity<SysFileUpload, SysFileUploadDTO> {
                 .fileName(fileName)
                 .fileSize(fileSize)
                 .fileSuffix(fileSuffix)
+                .fileType(fileType)
                 .fileLocation(fileLocation)
                 .fileFullAddress(fileFullAddress)
                 .ip(ip)
@@ -89,6 +95,7 @@ public class SysFileUpload extends BaseEntity<SysFileUpload, SysFileUploadDTO> {
                 .fileName(dto.getFileName())
                 .fileSize(dto.getFileSize())
                 .fileSuffix(dto.getFileSuffix())
+                .fileType(dto.getFileType())
                 .fileLocation(dto.getFileLocation())
                 .fileFullAddress(dto.getFileFullAddress())
                 .ip(dto.getIp())
