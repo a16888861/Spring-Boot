@@ -1,7 +1,6 @@
 package com.kali.blog.common.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,17 +12,13 @@ import java.util.Date;
 /**
  * @author BenjaminEngle
  */
+@Log4j2
 public class LocalDateTimeUtil {
 
     /**
      * 格式化时间
      */
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    /**
-     * 日志打印
-     */
-    private static final Logger log = LoggerFactory.getLogger(LocalDateTimeUtil.class);
 
     /**
      * 判断传来的时间是否小于当前日期

@@ -3,7 +3,7 @@ package com.kali.blog.common.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -11,7 +11,7 @@ import java.util.Calendar;
 /**
  * @author Elliot
  */
-@Slf4j
+@Log4j2
 public class JwtUtil {
 
     private static Algorithm alg;

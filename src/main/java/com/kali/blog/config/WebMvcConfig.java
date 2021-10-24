@@ -1,5 +1,6 @@
 package com.kali.blog.config;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * @author Elliot
  */
+@Log4j2
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
@@ -41,5 +43,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(userInfoInterceptor);
         interceptorRegistration.addPathPatterns("/**");
         interceptorRegistration.excludePathPatterns(excludePathList);
+        log.info("拦截器放行的接口为:" + excludePathList);
     }
 }

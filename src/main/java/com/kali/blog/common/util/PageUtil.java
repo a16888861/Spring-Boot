@@ -3,7 +3,7 @@ package com.kali.blog.common.util;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kali.blog.common.base.CommonPage;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Elliot
  */
-@Slf4j
+@Log4j2
 public final class PageUtil implements Serializable {
 
     private static final long serialVersionUID = 1L;

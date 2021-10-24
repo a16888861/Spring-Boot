@@ -10,7 +10,7 @@ import com.kali.blog.common.response.ResponseEnum;
 import com.kali.blog.common.util.JwtUtil;
 import com.kali.blog.common.util.RedisUtil;
 import com.kali.blog.dto.UserDTO;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,8 +27,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Elliot
  */
+@Log4j2
 @Component
-@Slf4j
 public class UserInfoInterceptor implements HandlerInterceptor {
 
     private final ThreadLocal<Long> THREAD = new ThreadLocal<>();

@@ -15,7 +15,7 @@ import com.kali.blog.mapper.RoleMapper;
 import com.kali.blog.mapper.UserMapper;
 import com.kali.blog.service.UserService;
 import com.kali.blog.vo.LoginVO;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
  *
  * @author Elliot
  */
-@Slf4j
+@Log4j2
 @Service("userService")
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User, UserDTO> implements UserService {
