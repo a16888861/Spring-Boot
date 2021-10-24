@@ -27,3 +27,16 @@ spring:
   messages:
     encoding: UTF-8
     basename: i18n.message
+  servlet:
+    multipart:
+      enabled: true
+      # 文件写入磁盘的阈值
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+  mvc:
+    format:
+      date: yyyy-MM-dd HH:mm:ss
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8

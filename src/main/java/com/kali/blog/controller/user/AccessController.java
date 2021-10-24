@@ -116,6 +116,7 @@ public class AccessController extends BaseController {
         redisUtil.set(TokenConstant.USER_REFRESH_TOKEN + CommonConstants.HORIZONTAL_BAR + userDTO.getId(),
                 TokenConstant.TOKEN_PREFIX + CommonConstants.SPACE + refreshToken, refreshTokenExpiredTime);
         /*登录成功后 将用户信息放到redis中(存储150分钟)*/
+        userDTO.setPassword(null);
         redisUtil.set(TokenConstant.USER_INFO, JSONUtil.toJsonStr(userDTO), 9000);
         return Response.success(ResponseEnum.SUCCESS.getMessage(), userTokenVO);
     }
@@ -123,7 +124,6 @@ public class AccessController extends BaseController {
     /**
      * 获取当前登陆的用户信息
      *
-     * @param request 请求
      * @return 当前登陆的用户信息
      */
     @Log("获取当前登陆的用户信息")
@@ -132,11 +132,9 @@ public class AccessController extends BaseController {
             notes = "获取当前登陆用户的信息<br>" +
                     "必须登陆之后才能使用")
     @ApiOperationSupport(author = "Elliot", order = 2)
-    public ResponseInfo<UserInfoVO> getUserInfoVO(HttpServletRequest request) {
-        String xAuthorization = request.getHeader(TokenConstant.X_AUTHORIZATION);
-        /*查询用户信息*/
-        UserDTO userDTO = userService.selectById(JwtUtil.getClaim(xAuthorization.split(CommonConstants.SPACE)[1]).split(CommonConstants.HORIZONTAL_BAR)[2]);
-        userDTO.setPassword(null);
+    public ResponseInfo<UserInfoVO> getUserInfoVO() {
+        /*获取用户信息*/
+        UserDTO userDTO = JSONUtil.toBean((String)redisUtil.get(TokenConstant.USER_INFO),UserDTO.class);
         /*查询角色信息*/
         RoleDTO roleDTO = roleService.selectById(userDTO.getRoleId());
         RoleVO roleVO = BeanUtil.copyProperties(roleDTO, RoleVO.class);

@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -47,6 +48,9 @@ import java.util.List;
 @ApiSupport(order = 5, author = "Elliot")
 public class SysFileUploadController extends BaseController {
 
+    @Value("${file.upload.dir}")
+    private String uploadDir;
+
     @Resource
     private SysFileUploadService service;
 
@@ -54,24 +58,19 @@ public class SysFileUploadController extends BaseController {
      * 批量上传文件
      *
      * @param fileList 文件
-     * @param filePath 要上传的文件路径
      * @return 上传结果
      */
     @Log("公共上传文件")
     @PostMapping(value = "uploadFile", consumes = "multipart/*", headers = "content-type=multipart/form-data")
     @ApiOperation(value = "上传文件", notes = "上传文件接口")
     @ApiOperationSupport(author = "Elliot", order = 0)
-    public ResponseInfo<Response> uploadFile(
-            @RequestPart(value = "fileList") List<MultipartFile> fileList,
-            @ApiParam(value = "文件上传路径", type = "String", required = true) String filePath) {
-        if (StringUtils.isBlank(filePath)) {
-            return Response.fail("file.filePath.isEmpty");
-        }
+    public ResponseInfo<Response> uploadFile(@RequestPart(value = "fileList") List<MultipartFile> fileList) {
         if (fileList.size() > 5) {
             return Response.fail("file.size.isTooMuch");
         }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        fileList.forEach(file -> service.uploadFile(request, file, filePath));
+        fileList.forEach(file -> service.uploadFile(request, file, uploadDir));
+        log.info("文件上传结束～");
         return judgeResult(1);
     }
 
@@ -124,7 +123,10 @@ public class SysFileUploadController extends BaseController {
      */
     @Log("添加修改文件备注或删除文件信息")
     @PutMapping(value = "deleteAndRemark")
-    @ApiOperation(value = "添加修改文件备注或删除文件信息", notes = "添加修改文件备注或删除文件信息接口")
+    @ApiOperation(value = "添加修改文件备注或删除文件信息",
+            notes = "添加修改文件备注或删除文件信息接口<br/>" +
+                    "文件ID必传，可进行添加修改说明或软删除<br/>" +
+                    "删除状态(0正常1删除)")
     @ApiOperationSupport(author = "Elliot", order = 3)
     public ResponseInfo<Response> deleteAndRemark(@ApiParam(value = "文件ID", required = true) String id,
                                                   @ApiParam(value = "说明", required = false) String remark,

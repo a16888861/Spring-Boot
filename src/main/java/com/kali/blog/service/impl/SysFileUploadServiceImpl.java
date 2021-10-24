@@ -1,5 +1,6 @@
 package com.kali.blog.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -45,7 +46,11 @@ public class SysFileUploadServiceImpl extends BaseServiceImpl<SysFileUploadMappe
      */
     @Override
     public int uploadFile(HttpServletRequest request, MultipartFile file, String filePath) {
-        File upload = FileUtil.upload(file, filePath);
+        String userId = UserContextUtil.getUserInfo().getId();
+        String suffix = FileUtil.getExtensionName(file.getOriginalFilename());
+        String fileType = FileUtil.getFileType(suffix);
+        /*不同的用户对应不同的文件夹-对应日期做区分*/
+        File upload = FileUtil.upload(file, filePath + userId + "/" + fileType + "/" + DateUtil.now() + "/");
         if (ObjectUtil.isNull(upload)) {
             return 0;
         }
@@ -53,15 +58,12 @@ public class SysFileUploadServiceImpl extends BaseServiceImpl<SysFileUploadMappe
         String clientIpAddress = LogAspect.getClientIpAddress(request);
         String originalFilename = file.getOriginalFilename();
         String uploadName = upload.getName();
-        String suffix = FileUtil.getExtensionName(file.getOriginalFilename());
-        String fileType = FileUtil.getFileType(suffix);
         log.info("开始记录上传位置:{上传原文件名为:{},文件重命名:{},文件扩展名:{},文件类型:{},文件夹为:{},文件真实路径为:{} - 执行时间:{{}}}",
                 originalFilename, uploadName, suffix, fileType, filePath + uploadName, upload, LocalDateTime.now().format(CommonConstants.DATE_TIME_FORMATTER));
         insert(SysFileUploadDTO.builder()
                 .originalName(originalFilename).fileName(upload.getName()).fileSize(String.valueOf(file.getSize()))
                 .fileSuffix(suffix).fileType(fileType).fileLocation(filePath).fileFullAddress(upload.getPath())
-                .ip(clientIpAddress).createBy(UserContextUtil.getUserInfo().getId()).build());
-        log.info("文件上传结束～");
+                .ip(clientIpAddress).createBy(userId).build());
         return 1;
     }
 
