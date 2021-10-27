@@ -21,7 +21,7 @@ Spring-Boot 框架搭建的博客后台，目前实现用户注册和单点登�
     docker run -d -p 6379:6379 --name redis-6.2.5 7faa --appendonly yes
     docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 --name mysql-8.0.21 8e85
     3.批量启动
-    docker start {docker ps -a | awk '{ print $1 }' | tail -n +2}%
+    docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
 
 ##### Issue
     1.如使用docker命令遇到权限问题，可通过将用户添加到docker用户组可以将sudo去掉，命令如下
