@@ -45,6 +45,8 @@
         <redis.version>2.3.12.RELEASE</redis.version>
         <!-- jwt版本号 -->
         <jwt.version>3.10.3</jwt.version>
+        <!-- EasyExcel版本号 -->
+        <eaxyexcel.version>3.0.1</eaxyexcel.version>
     </properties>
 
     <!-- 环境变量 -->
@@ -244,6 +246,22 @@
         <dependency>
             <groupId>net.minidev</groupId>
             <artifactId>json-smart</artifactId>
+        </dependency>
+        <!-- EasyExcel -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>${eaxyexcel.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-schemas</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

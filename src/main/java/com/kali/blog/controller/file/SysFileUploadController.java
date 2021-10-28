@@ -11,6 +11,7 @@ import com.kali.blog.common.context.UserContextUtil;
 import com.kali.blog.common.response.Response;
 import com.kali.blog.common.response.ResponseEnum;
 import com.kali.blog.common.response.ResponseInfo;
+import com.kali.blog.common.util.FileUtil;
 import com.kali.blog.dto.SysFileUploadDTO;
 import com.kali.blog.entity.SysFileUpload;
 import com.kali.blog.service.SysFileUploadService;
@@ -80,7 +81,6 @@ public class SysFileUploadController extends BaseController {
      * @param id 文件id
      * @return 结果
      */
-    //TODO 下载文件接口暂未完成
     @Log("公共下载文件")
     @PostMapping(value = "downloadFile")
     @ApiOperation(value = "下载文件", notes = "下载文件接口")
@@ -88,6 +88,8 @@ public class SysFileUploadController extends BaseController {
     public ResponseInfo<Response> downloadFile(@ApiParam(value = "文件ID", type = "String", required = true) String id) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        SysFileUploadDTO dto = service.selectById(id);
+        FileUtil.downloadFile(request, response, cn.hutool.core.io.FileUtil.newFile(dto.getFileFullAddress()), Boolean.TRUE);
         return judgeResult(1);
     }
 
