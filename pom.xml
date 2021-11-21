@@ -47,6 +47,8 @@
         <jwt.version>3.10.3</jwt.version>
         <!-- EasyExcel版本号 -->
         <eaxyexcel.version>3.0.1</eaxyexcel.version>
+        <!-- ElasticSearch版本号 -->
+        <elasticsearch.version>7.15.1</elasticsearch.version>
     </properties>
 
     <!-- 环境变量 -->
@@ -143,6 +145,19 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 搜索引擎 -->
+        <!-- ES服务依赖 -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <!-- ES高级API依赖 -->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
         <!--数据库-->
         <!-- mysql-connector-java -->
         <dependency>
