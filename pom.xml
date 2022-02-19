@@ -20,9 +20,9 @@
     <!-- 版本控制 -->
     <properties>
         <!-- Java 版本 -->
-        <java.version>8</java.version>
+        <java.version>17</java.version>
         <!-- mysql-connect版本 -->
-        <mysql.version>8.0.26</mysql.version>
+        <mysql.version>8.0.27</mysql.version>
         <!-- druid连接池版本号 -->
         <druid.version>1.2.8</druid.version>
         <!-- mybatis-plus版本号 -->
@@ -37,14 +37,12 @@
         <swagger.version>3.0.3</swagger.version>
         <!-- hutool工具箱版本号 -->
         <hutool.version>5.6.3</hutool.version>
-        <!-- commons-lang3版本号 -->
-        <commons-lang3.version>3.12.0</commons-lang3.version>
         <!-- poi版本号 -->
         <poi.version>3.17</poi.version>
         <!-- Redis版本号 -->
         <redis.version>2.3.12.RELEASE</redis.version>
         <!-- jwt版本号 -->
-        <jwt.version>3.10.3</jwt.version>
+        <jwt.version>3.18.3</jwt.version>
         <!-- EasyExcel版本号 -->
         <eaxyexcel.version>3.0.1</eaxyexcel.version>
         <!-- ElasticSearch版本号 -->
@@ -158,6 +156,7 @@
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
             <version>${elasticsearch.version}</version>
         </dependency>
+
         <!--数据库-->
         <!-- mysql-connector-java -->
         <dependency>
